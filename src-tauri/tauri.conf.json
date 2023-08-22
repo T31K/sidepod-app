@@ -1,0 +1,131 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "build": {
+    "beforeBuildCommand": "pnpm build",
+    "beforeDevCommand": "pnpm dev",
+    "devPath": "http://localhost:5188",
+    "distDir": "../dist"
+  },
+  "package": {
+    "productName": "tauri-react-template",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "globalShortcut": {
+        "all": true
+      },
+      "notification": {
+        "all": true
+      },
+      "process": {
+        "exit": true,
+        "relaunch": true
+      },
+      "window": {
+        "all": true
+      },
+      "shell": {
+        "execute": true,
+        "open": true,
+        "scope": [{
+          "name": "get-track",
+          "cmd": "osascript",
+          "args": ["-e", { "validator": "\\S+" }]
+        },
+        {
+          "name": "get-player-status",
+          "cmd": "osascript",
+          "args": ["-e", { "validator": "\\S+" }]
+        },
+        {
+          "name": "play",
+          "cmd": "osascript",
+          "args": ["-e", { "validator": "\\S+" }]
+        },        
+        {
+          "name": "open-spotify",
+          "cmd": "open",
+          "args": ["-a", { "validator": "\\S+" }]
+        },
+        {
+          "name": "get-timestamp",
+          "cmd": "osascript",
+          "args": ["-e", { "validator": "\\S+" }]
+        }
+        ]
+      },
+      "fs": {
+        "all": true,
+        "scope": ["$APP/*"]
+      },
+      "clipboard": {
+        "readText": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "category": "DeveloperTool",
+      "copyright": "",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ],
+      "identifier": "com.tarui-react-template.dev",
+      "longDescription": "",
+      "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
+        "frameworks": [],
+        "providerShortName": null,
+        "signingIdentity": null
+      },
+      "resources": [],
+      "shortDescription": "",
+      "targets": "all",
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "updater": {
+      "active": false
+    },
+    "macOSPrivateApi": true,
+    "windows": [
+      {
+        "fullscreen": false,
+        "label": "main",
+        "width": 380,
+        "height": 180,
+        "resizable": true,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "decorations": false,
+        "title": "tauri-react-template"
+      },
+      {
+        "fullscreen": false,
+        "label": "settings",
+        "title": "Settings",
+        "width": 820,
+        "height": 520,
+        "center": true,
+        "resizable": true,
+        "transparent": true,
+        "alwaysOnTop": true
+      }
+    ]
+  }
+}
