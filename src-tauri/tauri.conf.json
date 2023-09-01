@@ -23,7 +23,29 @@
         "relaunch": true
       },
       "window": {
-        "all": true
+        "center": true,
+        "setMaximizable": true,
+        "setMinimizable": true,
+        "setClosable": true,
+        "show": true,
+        "hide": true,
+        "close": true,
+        "setDecorations": true,
+        "setAlwaysOnTop": true,
+        "setSize": true,
+        "setMinSize": true,
+        "setMaxSize": true,
+        "setPosition": true,
+        "setFullscreen": true,
+        "setFocus": true,
+        "setIcon": true,
+        "setSkipTaskbar": true,
+        "setCursorGrab": true,
+        "setCursorVisible": true,
+        "setCursorIcon": true,
+        "setCursorPosition": true,
+        "setIgnoreCursorEvents": true,
+        "startDragging": true
       },
       "shell": {
         "execute": true,
@@ -113,19 +135,40 @@
         "transparent": true,
         "alwaysOnTop": true,
         "decorations": false,
+        "skipTaskbar": true,
         "title": "tauri-react-template"
+      },
+      {
+        "fullscreen": false,
+        "label": "mini",
+        "width": 105,
+        "height": 105,
+        "resizable": true,
+        "transparent": true,
+        "alwaysOnTop": true,
+        "decorations": false,
+        "skipTaskbar": true,
+        "title": "mini"
       },
       {
         "fullscreen": false,
         "label": "settings",
         "title": "Settings",
-        "width": 820,
-        "height": 520,
-        "center": true,
-        "resizable": true,
+        "visible": false,
+        "skipTaskbar": true,
         "transparent": true,
-        "alwaysOnTop": true
+        "closable": false,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "width": 680,
+        "height": 450,
+        "center": true,
+        "resizable": true
       }
-    ]
+    ],
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    }
   }
 }
