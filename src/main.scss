@@ -1,21 +1,60 @@
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
+:root {
+  color-scheme: dark;
+  --grey12: #171717;
+  --grey11: #202020;
+  --grey10: #333333;
+  --grey9: #464646;
+  --grey8: #696969;
+  --grey7: #858585;
+  --grey6: #adadad;
+  --grey5: #c9c9c9;
+  --grey4: #dedede;
+  --grey3: #ececec;
+  --grey2: #f2f2f2;
+  --grey1: #ffffff;
+}
+
 body {
-  background: red;
   display: flex;
   justify-content: flex-end;
+  overflow: hidden;
 }
 main {
   width: 75px;
+  margin-top: 15px;
+  margin-right: 15px;
   height: 75px;
   padding: 10px;
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+  transition: width 0.8s ease-in-out, height 0.8s ease-in-out;
 }
 
 /* Hover effect */
 main.active {
   width: 330px;
   height: 150px;
+}
+
+main {
+  div.show {
+    opacity: 100;
+    transition: opacity 0.4s ease-in-out;
+    transition-delay: 500ms;
+  }
+  
+  div.hide {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+}
+div.mini {
+  background-color: black;
+  margin-top: 15px;
+  margin-right: 15px;
+  border-radius: 25px;
+  width: 75px;
+  height: 75px;
 }
 
 div.settings {
@@ -109,3 +148,60 @@ div.artist {
   height: 4px;
   width: 4px;
 }
+
+
+#settings {
+  background: var(--grey12);
+  
+  .topBar {
+    
+    border-bottom: 1px solid  var(--grey10);
+    
+  }
+  .sideBar {
+    width: 60px;
+    border-right: 1px solid  var(--grey10);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px 0;
+    
+    i {
+      padding: 5px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+      
+      &.active {
+        background-color: rgba(255, 255, 255, 0.063);
+      }
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.097);
+      }
+
+    }
+  }
+  
+  .breadcrumb {
+    
+    .pill {
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0 2px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.063);
+      
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
+}
+
