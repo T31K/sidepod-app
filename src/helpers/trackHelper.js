@@ -1,6 +1,7 @@
 import { Command } from '@tauri-apps/api/shell';
 
 let isExecuting = false; // Flag to track if the function is currently executing
+let isAltExecuting = false;
 
 export const getNowPlaying = () => {
   if (isExecuting) {
@@ -53,6 +54,51 @@ export const getNowPlaying = () => {
     command.on('error', (err) => {
       isExecuting = false; // Reset the flag in case of an error
       console.log('error getNowPlaying');
+      reject(err);
+    });
+
+    command.spawn();
+  });
+};
+
+export const getNowPlayingAlbumOnly = () => {
+  if (isAltExecuting) {
+    // If the function is already executing, return a promise that resolves when the current execution completes
+    return new Promise((resolve) => {
+      const checkAltExecution = () => {
+        if (!isAltExecuting) {
+          resolve(getNowPlayingAlbumOnly()); // Retry the function once the current execution completes
+        } else {
+          setTimeout(checkAltExecution, 100); // Check again after a short delay
+        }
+      };
+
+      checkAltExecution();
+    });
+  }
+
+  isAltExecuting = true; // Set the flag to indicate that the function is now executing
+
+  const command = new Command('get-track', ['-e', 'tell application "Spotify" to {artwork url of current track}']);
+
+  return new Promise((resolve, reject) => {
+    command.stdout.on('data', (line) => {
+      resolve(line);
+    });
+
+    command.on('close', ({ code }) => {
+      isAltExecuting = false;
+      if (code !== 0) {
+        console.log('error getNowPlayingAlbumOnly');
+        reject(new Error(`Command execution failed with code ${code}`));
+      } else {
+        resolve(code);
+      }
+    });
+
+    command.on('error', (err) => {
+      isAltExecuting = false; // Reset the flag in case of an error
+      console.log('error getNowPlayingAlbumOnly');
       reject(err);
     });
 
