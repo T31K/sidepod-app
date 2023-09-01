@@ -17,7 +17,8 @@ tauri-build = { version = "1.0.2", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.0.2", features = [ "window-all", "notification-all", "process-exit", "fs-all", "shell-execute", "process-relaunch", "macos-private-api", "shell-open", "global-shortcut-all", "clipboard-read-text"] }
+tauri = { version = "1.2", features = [ "window-set-max-size", "window-set-decorations", "window-set-closable", "window-set-cursor-position", "window-set-content-protected", "window-set-fullscreen", "window-set-cursor-icon", "window-set-icon", "window-set-min-size", "window-set-ignore-cursor-events", "window-set-position", "window-set-cursor-grab", "window-set-cursor-visible", "window-start-dragging", "window-center", "window-set-minimizable", "window-set-maximizable", "window-set-size", "window-set-skip-taskbar", "clipboard-read-text", "fs-all", "global-shortcut-all", "macos-private-api", "notification-all", "process-exit", "process-relaunch", "shell-execute", "shell-open", "system-tray", "window-close", "window-hide", "window-set-always-on-top", "window-set-focus", "window-show"] }
+tauri-plugin-positioner = "1.0"
 
 [features]
 # by default Tauri runs in production mode
