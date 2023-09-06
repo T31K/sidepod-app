@@ -31,6 +31,12 @@ const ProgressBar = ({ rtl, isActive, currentTrack }) => {
     };
   }, [isActive]);
 
+  const handleFinalChange = async (values) => {
+    const selectedPercentage = values[0]; // Get the selected percentage from the values array
+    const newPositionInSeconds = (selectedPercentage / 100) * totalValue; // Calculate the new position in seconds
+    goToPos(newPositionInSeconds); // Update the playback position
+  };
+
   return (
     <div className="flex justify-center items-center w-[94%] gap-3">
       <div className="timestamp">{formatSecondsToMinutes(currValue)}</div>
@@ -39,6 +45,7 @@ const ProgressBar = ({ rtl, isActive, currentTrack }) => {
         step={STEP}
         rtl={rtl}
         onChange={(values) => setValues(values)}
+        onFinalChange={(values) => handleFinalChange(values)}
         renderTrack={({ props, children }) => (
           <div
             onMouseDown={props.onMouseDown}

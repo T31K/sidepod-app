@@ -10,12 +10,7 @@ export const tabs = [
     route: 'premium',
   },
   {
-    name: 'download-cloud',
-    label: 'Updates',
-    route: 'Update',
-  },
-  {
-    name: 'dashboard',
+    name: 'dashboard-2',
     label: 'System',
     route: 'system',
   },

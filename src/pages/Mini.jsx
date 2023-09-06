@@ -10,10 +10,12 @@ import { appWindow } from '@tauri-apps/api/window';
 import { move_window, Position } from 'tauri-plugin-positioner-api';
 import { emit, listen } from '@tauri-apps/api/event';
 
+const NEW_ALBUM =
+  'https://images.placeholders.dev/?width=100&height=100&bgColor=%23fff&textColor=rgba(255,255,255,0.5)';
 function Mini() {
-  const [currentAlbum, setCurrentAlbum] = useState('');
-
+  const [currentAlbum, setCurrentAlbum] = useState(NEW_ALBUM);
   const [isMiniActive, setMiniActive] = useState(true);
+  // const [isFirstLaunch, setIsFirstLaunch] = useState(0);
 
   useEffect(() => {
     initListener();
@@ -32,6 +34,13 @@ function Mini() {
       emit('updateState:Mini', { isWidgetActive: true });
     }
   }, [isMiniActive]);
+
+  // useEffect(() => {
+  //   if (isFirstLaunch <= 1) {
+  //     setIsFirstLaunch(isFirstLaunch + 1);
+  //   } else {
+  //   }
+  // }, [currentAlbum]);
 
   const initListener = async () => {
     const unlisten = await listen('updateState:Widget', (event) => {

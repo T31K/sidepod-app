@@ -91,6 +91,19 @@ div.settings {
   border-radius: 7px;
 }
 
+.bg-custom-gray {
+  background: rgba(255, 255, 255, 0.091);
+  
+  &.active {
+  background: rgba(255, 255, 255, 0.355);
+  }
+}
+
+button {
+  background: var(--grey10);
+  padding: 5px 10px;
+}
+
 .timestamp {
   color: rgba(255, 255, 255, 0.60);
   font-variant-numeric: lining-nums tabular-nums;
@@ -190,7 +203,7 @@ div.artist {
     .pill {
       border-radius: 5px;
       padding: 3px 8px;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
       margin: 0 2px;
       display: inline-flex;

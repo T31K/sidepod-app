@@ -13,7 +13,7 @@ function Widget() {
   const [currentTrack, setCurrentTrack] = useState({
     name: 'Never Gonna Give You Up',
     artist: 'Rick Astley',
-    album: 'https://images.placeholders.dev/?width=100&height=100&bgColor=%23000&textColor=rgba(255,255,255,0.5)',
+    album: 'https://images.placeholders.dev/?width=100&height=100&bgColor=%23fff&textColor=rgba(255,255,255,0.5)',
     repeat: false,
     shuffle: false,
     state: '',
@@ -70,7 +70,7 @@ function Widget() {
                     isActive ? 'show' : 'hide'
                   }`}
                 >
-                  {currentTrack.name}
+                  {currentTrack.name?.length > 32 ? `${currentTrack.name.substring(0, 27)}...` : currentTrack.name}
                 </div>
                 <div
                   className={`artist text-gray-200 select-none cursor-default  text-left ${isActive ? 'show' : 'hide'}`}
