@@ -24,9 +24,6 @@
       },
       "window": {
         "center": true,
-        "setMaximizable": true,
-        "setMinimizable": true,
-        "setClosable": true,
         "show": true,
         "hide": true,
         "close": true,
@@ -40,11 +37,6 @@
         "setFocus": true,
         "setIcon": true,
         "setSkipTaskbar": true,
-        "setCursorGrab": true,
-        "setCursorVisible": true,
-        "setCursorIcon": true,
-        "setCursorPosition": true,
-        "setIgnoreCursorEvents": true,
         "startDragging": true
       },
       "shell": {
@@ -157,7 +149,6 @@
         "visible": false,
         "skipTaskbar": true,
         "transparent": true,
-        "closable": false,
         "decorations": false,
         "alwaysOnTop": true,
         "width": 680,
