@@ -19,6 +19,7 @@ fn main() {
       tauri::Menu::default()
     })
     .system_tray(tray)
+    .enable_macos_default_menu(false)
     .on_system_tray_event(|handle, event| {
       let tauri::SystemTrayEvent::MenuItemClick { id, .. } = event else {
           return;
@@ -35,7 +36,12 @@ fn main() {
           "quit" => std::process::exit(0),
           _ => {}
       };
-  })
+    })
+    .setup(move |app| {
+      // Set activation poicy to Accessory to prevent the app icon from showing on the dock
+      app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+      Ok(())
+    })
     .run(context)
     .expect("error while running tauri application");
 }
