@@ -31,6 +31,10 @@ const ProgressBar = ({ rtl, isActive, currentTrack }) => {
     };
   }, [isActive]);
 
+  const handleOnChange = async (values) => {
+    setValues(values);
+  };
+
   const handleFinalChange = async (values) => {
     const selectedPercentage = values[0]; // Get the selected percentage from the values array
     const newPositionInSeconds = (selectedPercentage / 100) * totalValue; // Calculate the new position in seconds
@@ -44,7 +48,7 @@ const ProgressBar = ({ rtl, isActive, currentTrack }) => {
         values={values}
         step={STEP}
         rtl={rtl}
-        onChange={(values) => setValues(values)}
+        onChange={(values) => handleOnChange(values)}
         onFinalChange={(values) => handleFinalChange(values)}
         renderTrack={({ props, children }) => (
           <div
