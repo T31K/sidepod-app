@@ -7,8 +7,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "tauri-react-template",
-    "version": "0.1.0"
+    "productName": "Sidepod",
+    "version": "0.1.1"
   },
   "tauri": {
     "allowlist": {
@@ -92,7 +92,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tarui-react-template.dev",
+      "identifier": "com.sidepod",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -114,28 +114,31 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": true,
+      "endpoints": [
+          "https://api.getharmonize.app/sidepod/updates/{{target}}/{{current_version}}"
+      ],
+      "dialog": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEVEQUY3MUYwQTNFNkY5NkIKUldScitlYWo4SEd2N2FYelVlYjVZanBSYmw4Z1J2VUY3TUp4em4yKzAxWFJzN3JEVlFtVG1Gd2gK"
     },
     "macOSPrivateApi": true,
     "windows": [
       {
-        "fullscreen": false,
         "label": "main",
         "width": 380,
-        "height": 180,
-        "resizable": true,
+        "height": 520,
+        "visible": false,
         "transparent": true,
         "alwaysOnTop": true,
         "decorations": false,
         "skipTaskbar": true,
-        "title": "tauri-react-template"
+        "title": "main"
       },
       {
-        "fullscreen": false,
         "label": "mini",
         "width": 105,
         "height": 105,
-        "resizable": true,
+        "visible": true,
         "transparent": true,
         "alwaysOnTop": true,
         "decorations": false,

@@ -16,31 +16,63 @@
   --grey1: #ffffff;
 }
 
+::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--grey10);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--grey9);
+}
+
+
 body {
   display: flex;
   justify-content: flex-end;
   overflow: hidden;
+  padding-top: 15px;
 }
+
 main {
   width: 75px;
   margin-top: 15px;
   margin-right: 15px;
   height: 75px;
   padding: 10px;
-  transition: width 0.8s ease-in-out, height 0.8s ease-in-out;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
 }
 
-/* Hover effect */
 main.active {
   width: 330px;
   height: 150px;
+  transition: width 0.4s ease-in-out, height 0.4s ease-in-out 0s;
+}
+
+main.searchActive {
+  width: 330px;
+  height: 200px;
+  transition: width 0.4s ease-in-out, height 0.4s ease-in-out 0s;
+  
+}
+
+main.searchResultActive {
+  width: 330px;
+  height: 465px;
+  transition: width 0.6s ease-in-out, height 0.6s ease-in-out 0s;
+}
+
+main.songActive {
+  width: 330px;
 }
 
 main {
   div.show {
     opacity: 100;
-    transition: opacity 0.4s ease-in-out;
-    transition-delay: 500ms;
+    transition: opacity 0.2s ease-in-out 0.3s;
   }
   
   div.hide {
@@ -62,6 +94,11 @@ div.settings {
   height: 500px;
 }
 
+.draggableBar {
+  -webkit-app-region: drag;
+  cursor: move;
+}
+
 .title {
   color: #FFF;
   font-family: 'SF Pro Display', sans-serif;
@@ -71,6 +108,33 @@ div.settings {
   line-height: 22px;
   letter-spacing: .608px;
   margin-top: 8px;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.123);
+  width: 30px;
+  font-size: 22px;
+  height: 30px; /* Add this line */
+  border-radius: 50%; /* This makes it perfectly round */
+  cursor: pointer;
+  
+  &:hover {
+  background: rgba(255, 255, 255, 0.144);
+    
+  }
+}
+.artist {
+  color: rgba(255, 255, 255, 0.60);
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 22px; 
+  letter-spacing: .598px;
+  margin-top: -3px;
 }
 
 .titlebar {
@@ -99,6 +163,32 @@ div.settings {
   }
 }
 
+@keyframes rotateUp {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-180deg);
+  }
+}
+
+@keyframes rotateDown {
+  from {
+    transform: rotate(-180deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.rotate-up {
+  animation: rotateUp 0.3s forwards; /* forwards ensures it stays at the end state after completing */
+}
+
+.rotate-down {
+  animation: rotateDown 0.3s forwards;
+}
+
 button {
   background: var(--grey10);
   padding: 5px 10px;
@@ -115,22 +205,13 @@ button {
   letter-spacing: .608px;
 }
 
-img {
+img.main {
   width: 55px;
   height: 55px;
-  border-radius: 16px;
+  border-radius: 13px;
 }
 
-div.artist {
-  color: rgba(255, 255, 255, 0.60);
-  font-family: 'SF Pro Display', sans-serif;
-  font-size: 17px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 22px; 
-  letter-spacing: .598px;
-  margin-top: -3px;
-}
+
 .titlebar-button {
   display: inline-flex;
   justify-content: center;
@@ -162,6 +243,86 @@ div.artist {
   width: 4px;
 }
 
+.searchBar {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.183);
+  padding: 6px 32px;
+  border-radius: 20px;
+  margin: 20px 0 15px 0;
+  outline: none;
+  font-family: 'SF Pro Display', sans-serif;
+  font-size: 13.6px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17.6px;
+  letter-spacing: .4864px;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.183);
+  
+  &:focus {
+    border: 1px solid rgba(255, 255, 255, 0.595);
+    outline: none;
+  }
+}
+
+
+div.item {
+ display: flex;
+ align-items: center;
+ transition: background-color 0.2s ease-in-out, transform 5s ease-in-out;
+ padding: 5px 0;
+ border-radius: 10px;
+ cursor: pointer;
+ opacity: 0;
+ animation: fadeIn .6s forwards;
+ margin-right: 8px;
+ 
+ &.active {
+  background: rgba(255, 255, 255, 0.104);
+  transition: background-color 0.2s ease-in-out, transform 5s ease-in-out;
+  
+ }
+  
+  img {
+    border-radius: 8px;
+    height: 40px;
+    width: 40px;
+  }
+  
+  .titleAlt {
+    color: #FFF;
+    font-family: 'SF Pro Display', sans-serif;
+    font-size: 13.6px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 17.6px;
+    letter-spacing: .4864px;
+    white-space: nowrap;
+    
+  }
+  
+  .artistAlt {
+    color: rgba(255, 255, 255, 0.60);
+    font-family: 'SF Pro Display', sans-serif;
+    font-size: 13.6px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 17.6px;
+    letter-spacing: .4784px; 
+    margin-top: -2.4px;
+    white-space: nowrap;
+  }
+  
+
+}
+
+
+@for $i from 1 through 10 {
+  .item:nth-child(#{$i}) {
+    $delay: .2 + (0.1 * ($i - 1));
+    animation-delay: #{$delay}s;
+  }
+}
 
 #settings {
   background: var(--grey12);
@@ -218,3 +379,59 @@ div.artist {
   }
 }
 
+svg {
+  transition: transform 0.2s ease-in-out;  // Transition on the transform property for smooth scaling
+  &:hover {
+    cursor: pointer;
+    filter: brightness(90%);  // Darken by 3% on hover
+  }
+  &:active {  
+    filter: brightness(60%);  // Darken by 3% on hover
+    transform: scale(1.15);  // Increase the size by 3%
+  }
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #fff transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
