@@ -2,9 +2,19 @@
   all(not(debug_assertions), target_os = "windows"),
   windows_subsystem = "windows"
 )]
+mod config;
+
+use config::create_folder_and_files;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayMenu};
+use cocoa::appkit::{NSMainMenuWindowLevel, NSWindow, NSWindowCollectionBehavior};
+use cocoa::base::id;
 
 fn main() {
+  if let Err(e) = create_folder_and_files() {
+    eprintln!("Failed to create folder and file: {}", e);
+    return;
+}
+  
   let context = tauri::generate_context!();
   
   let show = CustomMenuItem::new("show".to_string(), "Settings").accelerator("Cmd+Shift+P");
@@ -39,6 +49,23 @@ fn main() {
     })
     .setup(move |app| {
       // Set activation poicy to Accessory to prevent the app icon from showing on the dock
+      let window_names = ["mini", "main"];
+
+      for name in &window_names {
+          let window = app.get_window(name).unwrap();
+          #[cfg(target_os = "macos")]
+          {
+
+              let ns_win = window.ns_window().unwrap() as id;
+              unsafe {
+                  ns_win.setLevel_(((NSMainMenuWindowLevel + 1) as u64).try_into().unwrap());
+                  ns_win.setCollectionBehavior_(NSWindowCollectionBehavior::NSWindowCollectionBehaviorCanJoinAllSpaces);
+                  // ns_win.setCollectionBehavior_(NSWindowCollectionBehavior::NSWindowCollectionBehaviorMoveToActiveSpace);
+              }
+          }
+      }
+      tauri::updater::builder(app.handle()).should_install(|_current, _latest| true);
+
       app.set_activation_policy(tauri::ActivationPolicy::Accessory);
       Ok(())
     })
