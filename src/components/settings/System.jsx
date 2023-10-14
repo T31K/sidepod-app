@@ -18,7 +18,7 @@ function System() {
         Refresh app
       </button>
       <button
-        onClick={async () => relaunch}
+        onClick={async () => relaunch()}
         className="tracking-tight font-medium rounded-lg !mr-2"
       >
         Relaunch app
