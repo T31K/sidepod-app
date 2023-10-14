@@ -320,7 +320,7 @@ function Widget({ localInitData: parentInitData }) {
               className="searchBar"
               spellCheck={false}
               value={searchVal}
-              placeholder="Upgrade to premium to search"
+              placeholder={isPremium ? '' : 'Upgrade to premium to search'}
               onBlur={handleBlur}
               ref={inputRef}
               onChange={(e) => handleSearch(e)}

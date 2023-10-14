@@ -36,10 +36,8 @@ function App() {
     try {
       const res = await initData(userHash);
       const { access_token, premium, email, token_time } = res.data;
-      console.log(res);
-
       if (access_token) {
-        await setToken({ token: access_token, token_time: token_time });
+        await setToken({ token: access_token, token_time: token_time, premium: premium });
         setUserEmail(email);
         setIsAuth(true);
       }
