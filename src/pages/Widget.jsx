@@ -20,7 +20,7 @@ import { NEW_SPOTIFY_API, NEW_CURRENT_TRACK } from '@/helpers/stateHelper';
 function Widget({ localInitData: parentInitData }) {
   const [currentTrack, setCurrentTrack] = useState(NEW_CURRENT_TRACK);
   const [spotifyApi, setSpotifyApi] = useState(NEW_SPOTIFY_API);
-
+  const [isPremium, setIsPremium] = useState(null);
   const itemRefs = useRef([]);
   const mainRef = useRef(null);
   const inputRef = useRef(null);
@@ -58,10 +58,17 @@ function Widget({ localInitData: parentInitData }) {
   useHotkeys(
     ['escape'],
     () => {
-      if (mainRef.current.clientHeight == 465 || mainRef.current.clientHeight == 150) {
-        setItems([]);
-        setSearchActive(false);
-        setIsActive(false);
+      console.log(mainRef.current.clientHeight);
+      if (
+        mainRef.current.clientHeight == 465 ||
+        mainRef.current.clientHeight == 200 ||
+        mainRef.current.clientHeight == 150
+      ) {
+        if (isActive) {
+          setItems([]);
+          setSearchActive(false);
+          setIsActive(false);
+        }
       }
     },
     { preventDefault: true, enableOnFormTags: ['INPUT'] }
@@ -96,6 +103,8 @@ function Widget({ localInitData: parentInitData }) {
   }, [items]);
 
   useEffect(() => {
+    let timeoutId; // Declare a variable to store the ID of the timeout
+
     if (isActive) {
       handleRefreshIfRequired();
       appWindow.show();
@@ -103,8 +112,17 @@ function Widget({ localInitData: parentInitData }) {
       appWindow.setIgnoreCursorEvents(false);
     } else {
       appWindow.setIgnoreCursorEvents(true);
+      timeoutId = setTimeout(() => {
+        appWindow.hide();
+      }, 1500);
       emit('updateState:Widget', { isMiniActive: true });
     }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [isActive]);
 
   useEffect(() => {
@@ -125,12 +143,6 @@ function Widget({ localInitData: parentInitData }) {
   }, [searchActive]);
 
   useEffect(() => {
-    if (searchResultActive) {
-      // appWindow.setSize(new LogicalSize(380, 480));
-    }
-  }, [searchResultActive]);
-
-  useEffect(() => {
     if (searchVal !== '') {
       if (!searchActive) {
         setSearchActive(true);
@@ -138,45 +150,6 @@ function Widget({ localInitData: parentInitData }) {
       }
     }
   }, [searchVal]);
-
-  // useEffect(() => {
-  //   let openTimer, closeTimer;
-
-  //   if (songActive) {
-  //     appWindow.show();
-  //     appWindow.setIgnoreCursorEvents(false);
-
-  //     // Reset the timer if there's a pending song change
-  //     if (pendingSongChange) {
-  //       clearTimeout(openTimer);
-  //       setPendingSongChange(false); // Reset the pending flag
-  //     }
-
-  //     // Automatically set songActive to false after 2 seconds
-  //     openTimer = setTimeout(() => {
-  //       setSongActive(false);
-  //     }, 2800);
-  //   } else {
-  //     emit('updateState:Widget', { isMiniActive: true });
-
-  //     // After 1 second (or however long your closing animation is), check for pending changes
-  //     closeTimer = setTimeout(() => {
-  //       appWindow.hide();
-  //       appWindow.setIgnoreCursorEvents(true);
-  //       setIsAnimating(false); // End animation
-
-  //       if (pendingSongChange) {
-  //         setPendingSongChange(false);
-  //         setSongActive(true);
-  //       }
-  //     }, 1200);
-  //   }
-
-  //   return () => {
-  //     clearTimeout(openTimer);
-  //     clearTimeout(closeTimer);
-  //   };
-  // }, [songActive, pendingSongChange]);
 
   const initListener = async () => {
     const unlisten = await listen('updateState:Mini', async (event) => {
@@ -191,15 +164,24 @@ function Widget({ localInitData: parentInitData }) {
   };
 
   const localGetToken = async () => {
-    const { token, token_time } = await getToken();
-
+    const { token, token_time, premium } = await getToken();
     if (token) {
       spotifyApi.setAccessToken(token);
       setTokenTime(token_time);
     }
+    if (premium === undefined || premium === false) {
+      setIsPremium(false);
+    } else {
+      setIsPremium(true);
+    }
   };
 
   const handleSearch = (e) => {
+    if (!isPremium) {
+      setSearchActive(true);
+      return;
+    }
+
     const { value } = e.target;
     setSearchVal(value);
     if (value === '') {
@@ -235,6 +217,7 @@ function Widget({ localInitData: parentInitData }) {
   const handleBlur = async () => {
     setTimeout(() => {
       const inputElement = inputRef.current;
+      console.log(inputElement);
       inputElement.focus();
       inputElement.setSelectionRange(inputElement.value.length, inputElement.value.length);
     }, 0);
@@ -279,15 +262,13 @@ function Widget({ localInitData: parentInitData }) {
               <div className="mb-2 ">
                 <div
                   className={`text-white title select-none cursor-default truncate text-left ${
-                    isActive || songActive ? 'show' : 'hide'
+                    isActive ? 'show' : 'hide'
                   }`}
                 >
                   {currentTrack.name?.length > 30 ? `${currentTrack.name.substring(0, 27)}...` : currentTrack.name}
                 </div>
                 <div
-                  className={`artist text-gray-200 select-none cursor-default  text-left ${
-                    isActive || songActive ? 'show' : 'hide'
-                  }`}
+                  className={`artist text-gray-200 select-none cursor-default  text-left ${isActive ? 'show' : 'hide'}`}
                 >
                   {currentTrack.artist?.length > 32
                     ? `${currentTrack.artist.substring(0, 27)}...`
@@ -339,6 +320,7 @@ function Widget({ localInitData: parentInitData }) {
               className="searchBar"
               spellCheck={false}
               value={searchVal}
+              placeholder="Upgrade to premium to search"
               onBlur={handleBlur}
               ref={inputRef}
               onChange={(e) => handleSearch(e)}

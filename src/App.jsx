@@ -53,7 +53,7 @@ function App() {
   return (
     <>
       {appWindow.label === 'main' ? (
-        <Widget localInitData={localInitData} />
+        <Widget />
       ) : appWindow.label == 'mini' ? (
         <Mini />
       ) : (
