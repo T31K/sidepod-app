@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "Sidepod",
-    "version": "0.1.1"
+    "version": "0.1.2"
   },
   "tauri": {
     "allowlist": {
@@ -154,8 +154,9 @@
         "transparent": true,
         "decorations": false,
         "alwaysOnTop": true,
+        "maximizable": false,
         "width": 680,
-        "height": 450,
+        "height": 480,
         "center": true,
         "resizable": true
       }

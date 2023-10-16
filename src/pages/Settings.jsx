@@ -15,7 +15,7 @@ function Settings({ userHash, userEmail, isPremium, isAuth }) {
 
   return (
     <div
-      className="h-screen w-screen rounded-xl"
+      className="h-[450px] w-screen rounded-xl"
       id="settings"
     >
       <div

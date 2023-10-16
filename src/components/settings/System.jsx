@@ -18,6 +18,12 @@ function System() {
         Refresh app
       </button>
       <button
+        onClick={async () => relaunch()}
+        className="tracking-tight font-medium rounded-lg !mr-2"
+      >
+        Relaunch app
+      </button>
+      <button
         onClick={async () => exit()}
         className=" tracking-tight font-medium rounded-lg"
       >
